@@ -4,7 +4,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,8 +14,13 @@ public class StepTestDescripton {
 
 	WebDriver driver = null;
     
-	//verify that user is able to login using a valid username and password
-	// using a regular expression to call the Page more than a scenario
+	//*
+	//*
+	// Scenario:verify that user is able to login using a valid username and password 
+	// - Using a regular expression to call the Page more than a scenario
+	//*
+	//*
+	
 	@Given("^A user (?:is on|navigates to) (http.*)$")
 	public void a_user_is_on_store_demoqa_com(String url) throws Throwable {
 	  if(driver == null) { 
@@ -47,6 +51,9 @@ public class StepTestDescripton {
 		
 		WebElement SubmitButton = driver.findElement(By.id("login"));
 		SubmitButton.click(); //Click on LoginButton
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		WebElement validate = driver.findElement(By.className("display-name"));
+		Assert.assertEquals("testecucumber",validate.getText());
 	}
 
 	@Then("^User is able to login sucessfully$")
@@ -56,7 +63,12 @@ public class StepTestDescripton {
 	    driver.close();
 	}
 
-	//login with a invalid username
+	//*
+	//*
+	//Scenario: login with a invalid username
+	//*
+	//*
+	
 	//@Given("^A user navigates to (.*)$")
 	//public void a_User_is_on_the_login_page(String url) throws Throwable {
 				   
@@ -83,11 +95,47 @@ public class StepTestDescripton {
 	public void application_should_dine_login_to_the_user_by_displaying_approprieate_erro_message() throws Throwable {
 		
 		
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		Assert.assertTrue(driver.findElement(By.xpath(".//*[.='ERROR: Invalid username. Lost your password?']")).isDisplayed());
 		
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		driver.close();
+		
 	}
+	
+	    //*
+	 	//*
+		//Scenario: Login with invalid password
+		//*
+		//*
+	
+		@When("^User enters a valid username (.*) and invalid password (.*)$")
+		public void user_enters_a_valid_username_and_invalid_password(String userName,String password) throws Throwable {
+		   
+			WebElement invalidUsername = driver.findElement(By.id("log"));
+			//invalidUsername.sendKeys("");
+			invalidUsername.clear();
+			invalidUsername.sendKeys(userName); // Type in username
+			
+			WebElement Password = driver.findElement(By.id("pwd"));
+			Password.clear();
+			Password.sendKeys(password); // Type in the password
+			
+			WebElement SubmitButton = driver.findElement(By.id("login"));
+			SubmitButton.click(); //Click on LoginButton
+			driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		}
+
+		@Then("^Application should dine login to the password by displaying approprieate erro message$")
+		public void application_should_dine_login_to_the_password_by_displaying_approprieate_erro_message() throws Throwable {
+			
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			Assert.assertTrue(driver.findElement(By.xpath(".//*[.='ERROR: The password you entered for the username testecucumber is incorrect. Lost your password?']")).isDisplayed());
+			
+			driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+			driver.close();
+		}
+
+	
 
 }
