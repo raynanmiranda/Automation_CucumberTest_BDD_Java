@@ -16,3 +16,12 @@ Scenario: login with a invalid username
 	Given A user navigates to http://store.demoqa.com/products-page/your-account/
 	When User enters a invalid username testeErro and valid password qwer!@#$4321
 	Then Application should dine login to the user by displaying approprieate erro message
+	
+Scenario: login with a invalid password 
+	Verify that user is not able to login using password with special characters
+	
+	Given A user navigates to http://store.demoqa.com/products-page/your-account/
+	When User enters a valid username testecucumber and invalid password !@#$4321aa
+	Then Application should dine login to the password by displaying approprieate erro message
+	
+	
