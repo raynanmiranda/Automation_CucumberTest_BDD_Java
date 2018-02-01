@@ -16,11 +16,14 @@ public class StepTestDescripton {
 	WebDriver driver = null;
     
 	//verify that user is able to login using a valid username and password
-	@Given("^A user is on (http.*com)$")
+	// using a regular expression to call the Page more than a scenario
+	@Given("^A user (?:is on|navigates to) (http.*)$")
 	public void a_user_is_on_store_demoqa_com(String url) throws Throwable {
-	   driver = new ChromeDriver();
+	  if(driver == null) { 
+		driver = new ChromeDriver();
 	   driver.manage().window().maximize();
 	   driver.manage().timeouts().implicitlyWait(2,TimeUnit.MINUTES);
+	  }
 	   driver.get(url);
 		
 	}
@@ -54,15 +57,10 @@ public class StepTestDescripton {
 	}
 
 	//login with a invalid username
-	@Given("^A user is on the page (.*)$")
-	public void a_User_is_on_the_login_page(String url) throws Throwable {
-		
-		   driver = new ChromeDriver();
-		   driver.manage().window().maximize();
-		   driver.manage().timeouts().implicitlyWait(2,TimeUnit.MINUTES);
-		   driver.get(url);
-		   
-	}
+	//@Given("^A user navigates to (.*)$")
+	//public void a_User_is_on_the_login_page(String url) throws Throwable {
+				   
+	//}
 	
 	@And("^User enters a invalid username (.*) and valid password (.*)$")
 	public void user_enters_a_invalid_username_and_valid_password(String userName,String password) throws Throwable {
