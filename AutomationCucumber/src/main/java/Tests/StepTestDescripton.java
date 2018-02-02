@@ -58,9 +58,21 @@ public class StepTestDescripton {
 
 	@Then("^User is able to login sucessfully$")
 	public void user_is_able_to_login_sucessfully() throws Throwable { 
-	    driver.findElement(By.id("account_logout")).click();
-	    driver.navigate().refresh();
-	    driver.close();
+	    
+			WebElement logoutBtn = null;
+		try
+		    {
+			logoutBtn = driver.findElement(By.id("account_logout"));
+			logoutBtn.click();
+			driver.navigate().refresh();
+		    driver.close();
+		    }
+		catch(Exception Exp) {
+			System.out.println("Not able to find the element.");
+			throw Exp;
+		}
+		
+	      
 	}
 
 	//*
