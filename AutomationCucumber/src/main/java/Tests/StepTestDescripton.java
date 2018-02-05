@@ -36,9 +36,11 @@ public class StepTestDescripton {
 	public void user_Clicks_on_MyAccount_link() throws Throwable {
 		WebElement MyAccountLink = driver.findElement(By.className("account_icon"));
 		MyAccountLink.click();
+		
+		Assert.assertNotNull("Impossible to find the Account Button", MyAccountLink);
 	}
 
-	@When("^User enters a valid username (.*) and password (.*)$")
+	@And("^User enters a valid username (.*) and password (.*)$")
 	public void user_enters_a_valid_username_and_password(String userName, String password) throws Throwable {
 	    
 		WebElement UserName = driver.findElement(By.id("log"));
@@ -64,7 +66,7 @@ public class StepTestDescripton {
 		    {
 			logoutBtn = driver.findElement(By.id("account_logout"));
 			logoutBtn.click();
-			driver.navigate().refresh();
+			
 		    driver.close();
 		    }
 		catch(Exception Exp) {
@@ -121,7 +123,7 @@ public class StepTestDescripton {
 		//*
 		//*
 	
-		@When("^User enters a valid username (.*) and invalid password (.*)$")
+		@And("^User enters a valid username (.*) and invalid password (.*)$")
 		public void user_enters_a_valid_username_and_invalid_password(String userName,String password) throws Throwable {
 		   
 			WebElement invalidUsername = driver.findElement(By.id("log"));
