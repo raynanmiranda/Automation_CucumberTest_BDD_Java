@@ -6,6 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import cucumber.api.DataTable;
 import cucumber.api.java.en.*;
 
@@ -26,10 +29,10 @@ public class StepRegistrationDescription {
 	public void fillTheform(DataTable testData) throws Throwable {
 		int numberListCheckBox = 0;
 		
-		List<String> testDataList = testData.asList(String.class);
+		Map<String,String> testDataAsMap = testData.asMap(String.class, String.class);
 		
-		driver.findElement(By.id("name_3_firstname")).sendKeys(testDataList.get(0));
-		driver.findElement(By.id("name_3_lastname")).sendKeys(testDataList.get(1));
+		driver.findElement(By.id("name_3_firstname")).sendKeys(testDataAsMap.get("FirstName"));
+		driver.findElement(By.id("name_3_lastname")).sendKeys(testDataAsMap.get("LastName"));
 		
 		
 		
@@ -41,12 +44,15 @@ public class StepRegistrationDescription {
 			
 		}
 		
-		driver.findElement(By.id("phone_9")).sendKeys(testDataList.get(3));
-		driver.findElement(By.id("username")).sendKeys(testDataList.get(4));
-		driver.findElement(By.id("email_1")).sendKeys(testDataList.get(5));
-		driver.findElement(By.id("password_2")).sendKeys(testDataList.get(6));
-		driver.findElement(By.id("confirm_password_password_2")).sendKeys(testDataList.get(7));
+		driver.findElement(By.id("phone_9")).sendKeys(testDataAsMap.get("PhoneNumber"));
+		driver.findElement(By.id("username")).sendKeys(testDataAsMap.get("userName"));
+		driver.findElement(By.id("email_1")).sendKeys(testDataAsMap.get("Email"));
+		driver.findElement(By.id("password_2")).sendKeys(testDataAsMap.get("password"));
+		driver.findElement(By.id("confirm_password_password_2")).sendKeys(testDataAsMap.get("ConfirmPassword"));
 		
-		System.out.println(testDataList.toString());
+		System.out.println(testDataAsMap.toString());
+		
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		driver.close();
 	}
 }
