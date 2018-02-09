@@ -7,7 +7,7 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = "Features",
+		features = "Features/Registration.feature",
 		glue = {"Tests"}
 	)
 public class RunnerTest {
